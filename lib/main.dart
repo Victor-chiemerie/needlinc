@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'welcome_page_widget.dart';
+import 'package:needlinc/welcomePage2_widget.dart';
+import 'welcomepage1_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: WelcomePage1(),
+      home: WelcomePage2(),
     );
   }
 }
