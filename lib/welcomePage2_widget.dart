@@ -14,6 +14,21 @@ class _WelcomePage2State extends State<WelcomePage2> {
     'We provide a secure, safe and fast environment for both artisians and students'
   ];
 
+  bool showNext = false;
+  double small = 15, big = 19;
+  final activeColor = Colors.blue, inactiveColor = const Color.fromARGB(255, 143, 196, 240);
+
+  void _ShowNext() {
+    setState(() {
+      showNext = true;
+    });
+  }
+  void _HideNext() {
+    setState(() {
+      showNext = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +44,7 @@ class _WelcomePage2State extends State<WelcomePage2> {
                 padding: EdgeInsets.only(left: 40, right: 40),
                 alignment: Alignment.center,
                 child: Text(
-                  words.first,
+                  showNext ? words.last : words.first,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -51,52 +66,64 @@ class _WelcomePage2State extends State<WelcomePage2> {
             ),
           ),
           // Next button
-          Container(
-            alignment: Alignment.bottomRight,
-            margin: EdgeInsets.only(right: 20, top: 70),
-            child: ElevatedButton(
-              onPressed: () => print('pressed'),
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+          Visibility(
+            visible: showNext,
+            child: Container(
+              alignment: Alignment.bottomRight,
+              margin: EdgeInsets.only(right: 20, top: 70),
+              child: ElevatedButton(
+                onPressed: () => print('pressed'),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  backgroundColor: Colors.blue,
+                  padding: EdgeInsets.all(16),
                 ),
-                backgroundColor: Colors.blue,
-                padding: EdgeInsets.all(16),
-              ),
-              child: Text(
-                "NEXT",
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                child: Text(
+                  "NEXT",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),
           ),
 
-          // SizedBox(
-          //   height: 50
-          // ),
+          Visibility(
+            visible: !showNext,
+            child: SizedBox(
+              height: 105
+            ),
+          ),
 
           // Little circles below
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 19,
-                  height: 19,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0.5 * 19),
-                    color: Colors.blue,
+                GestureDetector(
+                  onTap: _HideNext,
+                  child: Container(
+                    width: showNext ? small : big,
+                    height: showNext ? small : big,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(0.5 * (showNext ? small : big)),
+                      color: showNext ? inactiveColor : activeColor,
+                    ),
                   ),
                 ),
                 SizedBox(width: 4.0),
-                Container(
-                  width: 15,
-                  height: 15,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0.5 * 15),
-                    color: const Color.fromARGB(255, 143, 196, 240),
+                GestureDetector(
+                  onTap: _ShowNext,
+                  child: Container(
+                    width: showNext ? big : small,
+                    height: showNext ? big : small,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(0.5 * (showNext ? big : small)),
+                      color: showNext ? activeColor : inactiveColor,
+                    ),
                   ),
                 ),
               ],
